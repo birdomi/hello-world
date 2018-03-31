@@ -1,0 +1,45 @@
+import math
+import queue
+
+N_limit=1000
+q=queue.Queue()
+
+T=int(input())
+inputArray=[]
+for i in range(T):
+    inputArray.append(int(input()))
+
+pandatic_numberArray=[]
+for i in range(1,1000):
+    square=int(math.pow(i,i))
+    if(square<N_limit):
+        pandatic_numberArray.append(square)
+    else:
+        break
+
+def panda_operation(n):
+    if(Is_pandatic(n)):
+        print('Yes')
+        return   
+    
+    for i in str(n):
+        if(int(i)>0):
+            result=n-int(math.pow(int(i),2))
+            if(result>0):
+                q.put(result)
+
+    if(q.empty()):
+        print('No')
+        return
+    panda_operation(q.get())
+
+def Is_pandatic(n):
+    check=False
+    for i in range(len(pandatic_numberArray)):
+        if(n==pandatic_numberArray[i]):
+            check=True
+    return check
+
+
+for i in range(T):
+    panda_operation(inputArray[i])
